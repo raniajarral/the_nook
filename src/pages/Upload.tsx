@@ -165,7 +165,7 @@ const Upload = () => {
     <div className="min-h-screen bg-[#18181b]">
       <Navigation />
       <main className="max-w-2xl mx-auto px-2 sm:px-4 lg:px-8 py-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-8 text-center tracking-tight animate-fade-in">Create Article</h1>
+  <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-8 text-center tracking-tight animate-fade-in">Add to your nook</h1>
         <form onSubmit={handleSubmit} className="space-y-6 bg-[#23272f] rounded-2xl shadow-2xl p-4 sm:p-8 border border-[#23272f] mt-6">
           {/* Title */}
           <div className="space-y-3">
@@ -349,7 +349,7 @@ const Upload = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center justify-center px-6 py-3 bg-gradient-to-br from-primary to-secondary text-white font-bold rounded-xl shadow-lg border-2 border-primary/40 hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-primary/60"
+                className="flex items-center justify-center px-6 py-3 bg-[#23272f] text-white font-bold rounded-xl shadow-lg border-2 border-primary/40 hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-primary/60"
                 disabled={uploadingImage}
               >
                 {uploadingImage ? (
@@ -398,7 +398,7 @@ const Upload = () => {
               <span title="Save article"><Save className="w-4 h-4 mr-2" /></span>
               {loading ? "Saving..." : "Save Article"}
             </Button>
-            <Button type="button" variant="outline" asChild className="border-[#35373e] text-white hover:bg-[#35373e]" disabled={loading}>
+            <Button type="button" variant="secondary" asChild className="bg-gray-700 text-white hover:bg-gray-500 border-0" disabled={loading}>
               <Link to="/">Cancel</Link>
             </Button>
           </div>

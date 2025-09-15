@@ -4,7 +4,7 @@ import { AuthForm } from "../components/AuthForm";
 const Signup: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#18181b] via-[#23232a] to-[#101014] dark">
-      <div className="w-full max-w-md bg-white/5 dark:bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-white/10 animate-fade-in">
+  <div className="w-full max-w-md p-6 sm:p-8 md:p-10 animate-fade-in md:bg-white/5 md:dark:bg-white/10 md:backdrop-blur-xl md:rounded-3xl md:shadow-2xl md:border md:border-white/10">
         <button
           onClick={() => window.location.href = '/'}
           className="mb-4 text-sm text-foreground/70 hover:text-primary px-2 py-1 rounded transition-colors focus:outline-none focus:underline underline underline-offset-2"

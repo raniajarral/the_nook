@@ -89,7 +89,7 @@ const Home = () => {
       </div>
   <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-12 animate-fade-in">
         <div className="mb-12 text-center">
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-white/80 mb-2 sm:mb-3 tracking-tight animate-fade-in">Your Article Library</h1>
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-white/80 mb-2 sm:mb-3 tracking-tight animate-fade-in">Explore</h1>
           <p className="hidden sm:block text-lg text-white/60 animate-fade-in-slow">Discover and organize your favorite articles in one place.</p>
         </div>
         {loading ? (

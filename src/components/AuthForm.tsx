@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../lib/firebase";
@@ -14,6 +15,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [isSignup, setIsSignup] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
@@ -67,9 +69,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-6 max-w-sm mx-auto p-6 bg-background rounded-2xl shadow-xl border border-border animate-fade-in"
+        className="flex flex-col gap-6 max-w-sm mx-auto p-6 bg-[#18181b] rounded-2xl shadow-xl border border-[#23272f] animate-fade-in"
       >
-        <h2 className="text-2xl font-bold mb-2 text-foreground text-center tracking-tight animate-slide-down">
+        <h2 className="text-2xl font-bold mb-2 text-white text-center tracking-tight animate-slide-down">
           {isSignup ? "Sign Up" : "Login"}
         </h2>
         <div className="flex flex-col gap-4">
@@ -81,7 +83,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
                 value={displayName}
                 onChange={e => setDisplayName(e.target.value)}
                 required={isSignup}
-                className="w-full px-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm"
+                className="w-full px-4 py-3 bg-[#23272f] text-white placeholder:text-white/50 rounded-lg border border-[#35373e] focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm"
                 autoComplete="name"
               />
             </div>
@@ -93,20 +95,29 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm"
+              className="w-full px-4 py-3 bg-[#23272f] text-white placeholder:text-white/50 rounded-lg border border-[#35373e] focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm"
               autoComplete="email"
             />
           </div>
           <div className="relative group">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm"
+              className="w-full px-4 py-3 bg-[#23272f] text-white placeholder:text-white/50 rounded-lg border border-[#35373e] focus:border-primary focus:ring-2 focus:ring-primary/40 outline-none transition-all duration-300 shadow-sm pr-12"
               autoComplete={isSignup ? "new-password" : "current-password"}
             />
+            <button
+              type="button"
+              tabIndex={-1}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:text-primary focus:text-primary active:text-primary focus:outline-none"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
           </div>
         </div>
         {error && (
@@ -116,14 +127,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
         )}
         <button
           type="submit"
-          className="w-full py-3 mt-2 rounded-lg bg-primary text-primary-foreground font-bold text-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/60 active:scale-95 animate-fade-in"
+          className="w-full py-3 mt-2 rounded-lg font-bold text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 bg-primary text-white focus:ring-primary/60 animate-fade-in"
         >
           {isSignup ? "Sign Up" : "Login"}
         </button>
         <button
           type="button"
           onClick={() => setIsSignup(!isSignup)}
-          className="w-full text-muted-foreground hover:text-primary underline text-sm mt-2 transition-colors duration-200 animate-fade-in"
+          className="w-full text-white/60 hover:text-primary underline text-sm mt-2 transition-colors duration-200 animate-fade-in"
         >
           {isSignup ? "Already have an account? Login" : "Don't have an account? Sign Up"}
         </button>

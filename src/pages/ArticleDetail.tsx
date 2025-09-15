@@ -154,23 +154,14 @@ useEffect(() => {
           </div>
           {/* Card Content */}
     <div className="bg-white/5 dark:bg-white/10 rounded-b-2xl shadow-2xl border border-white/10 p-2 sm:p-6 flex flex-col gap-6" style={{ marginTop: 0, zIndex: 1, position: 'relative' }}>
-            <button
-              onClick={() => window.history.back()}
-              className="inline-flex items-center text-sm text-foreground/70 hover:text-primary px-2 py-1 rounded transition-colors focus:outline-none focus:underline underline underline-offset-2 mb-4"
-              type="button"
-              style={{ background: 'none', border: 'none' }}
-            >
-              <span title="Back"><ArrowLeft className="w-4 h-4 mr-2" /></span>
-              Back
-            </button>
           {/* Title */}
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 leading-tight tracking-tight text-left">
             {article.title}
           </h1>
           {/* Author, Date, Read Time */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 text-white text-base text-left">
-            <span>by <span className="text-primary font-semibold">{article.author}</span></span>
-            <div className="flex gap-3 flex-wrap items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 text-base text-left">
+            <span>by <span className="text-white font-normal">{article.author}</span></span>
+            <div className="flex gap-3 flex-wrap items-center text-white">
               {article.publishedDate && <><span>•</span><span>{article.publishedDate}</span></>}
               {article.readTime && <><span>•</span><span className="flex items-center"><span title="Read time"><BookOpen className="w-4 h-4 mr-1" /></span>{article.readTime}</span></>}
             </div>
@@ -187,9 +178,7 @@ useEffect(() => {
           {article.tags && article.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-2 text-left">
               {article.tags.map((tag: string) => (
-                <Badge key={tag} variant="secondary" className="bg-gradient-to-r from-primary/80 to-secondary/80 text-white border-none shadow px-3 py-1 rounded-full text-xs font-semibold tracking-wide hover:scale-105 hover:shadow-lg transition-transform transition-shadow duration-200">
-                  <span className="inline-block align-middle mr-1 w-2 h-2 rounded-full bg-primary/80"></span>#{tag}
-                </Badge>
+                <span key={tag} className="text-xs text-white underline underline-offset-2 font-normal">#{tag}</span>
               ))}
             </div>
           )}
@@ -209,17 +198,20 @@ useEffect(() => {
                 </a>
               </Button>
             )}
-            <Button variant="outline" asChild className="flex-1 sm:flex-none">
-              <Link to="/">
-                Browse More Articles
-              </Link>
-            </Button>
+            <button
+              onClick={() => window.history.back()}
+              className="inline-flex items-center text-sm text-white underline underline-offset-2 px-2 py-1 rounded transition-colors focus:outline-none mb-4"
+              type="button"
+              style={{ background: 'none', border: 'none' }}
+            >
+              <span title="Back"><ArrowLeft className="w-4 h-4 mr-2" /></span>
+              Back
+            </button>
           </div>
         </div>
-        </div>
-      </main>
+      </div>
+    </main>
   </div>
-
   );
 };
 

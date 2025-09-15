@@ -105,19 +105,26 @@ export const ArticleCard = ({ id, title, author, description, image, tags, url, 
           )}
         </div>
   <div className="p-5 flex flex-col gap-2 flex-1">
-          <h3 className="text-xl font-bold text-white mb-1 line-clamp-2 group-hover:text-primary transition-colors duration-200">
-            {title}
-          </h3>
-          <p className="text-sm text-[#b3b3b3] mb-2 line-clamp-3 group-hover:text-foreground transition-colors duration-200">
-            {description}
-          </p>
-          <div className="flex items-center justify-between mt-2">
-            <span className="text-xs text-white/80 font-medium tracking-wide">
-              by {author}
-            </span>
-            {/* Removed 'External' text for cleaner card UI */}
-          </div>
+    <h3 className="text-xl font-bold text-white mb-1 line-clamp-2 group-hover:text-primary transition-colors duration-200">
+      {title}
+    </h3>
+    <p className="text-sm text-[#b3b3b3] mb-2 line-clamp-3 group-hover:text-foreground transition-colors duration-200">
+      {description}
+    </p>
+    <div className="flex-1" />
+    <div className="w-full pt-2 mt-auto flex flex-col gap-1">
+      <div className="flex items-center justify-between w-full">
+        <span className="text-xs text-white font-normal tracking-wide">by {author}</span>
+      </div>
+      {tags && tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 w-full">
+          {tags.map((tag) => (
+            <span key={tag} className="text-xs text-white underline underline-offset-2 font-normal">#{tag}</span>
+          ))}
         </div>
+      )}
+    </div>
+  </div>
       </Link>
       {/* Submission Request Button for private articles in My Nook */}
       {showSubmitButton && !isPublic && onSubmitRequest && (
