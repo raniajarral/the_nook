@@ -176,7 +176,7 @@ const Upload = () => {
               placeholder="Enter article title"
               value={formData.title}
               onChange={(e) => handleInputChange("title", e.target.value)}
-              className="bg-[#18181b] text-white border border-[#35373e] focus:border-primary focus:ring-primary/30 placeholder:text-white/40"
+              className="bg-[#18181b] text-white border border-[#35373e] focus:border-yellow-400 focus:ring-yellow-400/30 placeholder:text-white/40"
             />
           </div>
 
@@ -255,7 +255,7 @@ const Upload = () => {
                   <button
                     key={cat}
                     type="button"
-                    className="block w-full text-left px-3 py-2 text-white hover:bg-primary/20 transition-colors"
+                    className="block w-full text-left px-3 py-2 text-white hover:bg-yellow-400/20 transition-colors"
                     onMouseDown={() => {
                       addCategory(cat);
                       setCategoryInput("");
@@ -349,7 +349,7 @@ const Upload = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center justify-center px-6 py-3 bg-[#23272f] text-white font-bold rounded-xl shadow-lg border-2 border-primary/40 hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-primary/60"
+                className="flex items-center justify-center px-6 py-3 bg-[#23272f] text-white font-bold rounded-xl shadow-lg border-2 border-yellow-400/40 hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
                 disabled={uploadingImage}
               >
                 {uploadingImage ? (
@@ -369,7 +369,7 @@ const Upload = () => {
               />
               {formData.image && (
                 <div className="w-full sm:w-48 mt-4 sm:mt-0 flex-shrink-0">
-                  <img src={formData.image} alt="Preview" className="w-full max-h-48 object-contain rounded-lg border-2 border-primary/40 shadow-md" onError={e => (e.currentTarget.style.display = 'none')} />
+                  <img src={formData.image} alt="Preview" className="w-full max-h-48 object-contain rounded-lg border-2 border-yellow-400/40 shadow-md" onError={e => (e.currentTarget.style.display = 'none')} />
                 </div>
               )}
             </div>
@@ -394,7 +394,7 @@ const Upload = () => {
 
           {/* Submit/Cancel Buttons */}
           <div className="flex space-x-4 pt-4">
-            <Button type="submit" className="flex-1 bg-primary text-white hover:bg-primary/90" disabled={loading}>
+            <Button type="submit" className="flex-1 bg-yellow-400 text-black hover:bg-yellow-300" disabled={loading}>
               <span title="Save article"><Save className="w-4 h-4 mr-2" /></span>
               {loading ? "Saving..." : "Save Article"}
             </Button>

@@ -25,6 +25,12 @@ type MyNookArticle = {
 const MyNook: React.FC = () => {
   const [activeTab, setActiveTab] = useState("saved");
   const [user, setUser] = useState<User | null>(null);
+  type UserDetails = {
+    email?: string;
+    status?: string;
+    createdAt?: string;
+  };
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [savedArticles, setSavedArticles] = useState<MyNookArticle[]>([]);
   const [myArticles, setMyArticles] = useState<MyNookArticle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +52,16 @@ const MyNook: React.FC = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(u => setUser(u));
+    const unsubscribe = auth.onAuthStateChanged(async (u) => {
+      setUser(u);
+      if (u) {
+        // Fetch user details for admin check
+        const userDoc = await getDoc(doc(db, "users", u.uid));
+        setUserDetails(userDoc.exists() ? userDoc.data() : null);
+      } else {
+        setUserDetails(null);
+      }
+    });
     return () => unsubscribe();
   }, []);
 
@@ -144,11 +159,11 @@ const reloadSavedArticles = async (currentUser: User) => {
   {/* No title above tabs; tabs themselves will show icon and text with transition */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
           <TabsList className="flex gap-1 sm:gap-2 bg-[#23272f] rounded-2xl p-1 shadow-lg border border-[#23272f] mb-8 w-fit mx-auto">
-            <TabsTrigger value="saved" className="flex items-center gap-2 px-4 sm:px-6 py-2 text-base sm:text-lg font-semibold rounded-xl transition-all data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:scale-105 hover:bg-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/60">
+            <TabsTrigger value="saved" className="flex items-center gap-2 px-4 sm:px-6 py-2 text-base sm:text-lg font-semibold rounded-xl transition-all data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:shadow-lg data-[state=active]:scale-105 hover:bg-yellow-400/20 hover:text-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400/60">
               <Bookmark className="w-5 h-5" />
               <span className={`transition-all duration-300 ml-1 ${activeTab === "saved" ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}>Saved Articles</span>
             </TabsTrigger>
-            <TabsTrigger value="mine" className="flex items-center gap-2 px-4 sm:px-6 py-2 text-base sm:text-lg font-semibold rounded-xl transition-all data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:scale-105 hover:bg-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/60">
+            <TabsTrigger value="mine" className="flex items-center gap-2 px-4 sm:px-6 py-2 text-base sm:text-lg font-semibold rounded-xl transition-all data-[state=active]:bg-yellow-400 data-[state=active]:text-black data-[state=active]:shadow-lg data-[state=active]:scale-105 hover:bg-yellow-400/20 hover:text-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400/60">
               <User2 className="w-5 h-5" />
               <span className={`transition-all duration-300 ml-1 ${activeTab === "mine" ? 'opacity-100 max-w-xs' : 'opacity-0 max-w-0 overflow-hidden'}`}>My Nook</span>
             </TabsTrigger>
@@ -169,7 +184,7 @@ const reloadSavedArticles = async (currentUser: User) => {
                       </div>
                       <div className="flex flex-col items-end justify-between min-w-[90px] max-w-[120px]">
                         <button
-                          className="bg-black/60 rounded-full p-1 mb-2 hover:bg-primary/80 transition-colors flex items-center justify-center"
+                          className="bg-black/60 rounded-full p-1 mb-2 hover:bg-yellow-400/80 transition-colors flex items-center justify-center"
                           style={{ width: 28, height: 28 }}
                           onClick={e => {
                             e.preventDefault();
@@ -222,7 +237,7 @@ const reloadSavedArticles = async (currentUser: User) => {
                         </div>
                         <div className="flex flex-col items-end justify-between min-w-[90px] max-w-[120px]">
                           <button
-                            className="bg-black/60 rounded-full p-1 mb-2 hover:bg-primary/80 transition-colors flex items-center justify-center"
+                            className="bg-black/60 rounded-full p-1 mb-2 hover:bg-yellow-400/80 transition-colors flex items-center justify-center"
                             style={{ width: 28, height: 28 }}
                             onClick={e => {
                               e.preventDefault();
@@ -252,14 +267,16 @@ const reloadSavedArticles = async (currentUser: User) => {
               ) : myArticles.length > 0 ? (
                 myArticles.map(article => {
                   const isPending = pendingRequests.includes(article.id);
+                  // Remove submission request for admin users
+                  const isAdmin = userDetails?.status === "admin";
                   return (
                     <ArticleCard
                       key={article.id}
                       {...article}
                       isPublic={article.isPublic}
-                      showSubmitButton={!article.isPublic && !isPending}
+                      showSubmitButton={!isAdmin && !article.isPublic && !isPending}
                       pending={isPending}
-                      onSubmitRequest={handleSubmitRequest}
+                      onSubmitRequest={!isAdmin ? handleSubmitRequest : undefined}
                     />
                   );
                 })

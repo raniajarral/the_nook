@@ -76,7 +76,7 @@ const Home = () => {
       {/* Search Bar - Responsive */}
       <div className="w-full flex justify-center py-5 sm:py-8 bg-[#18181b] animate-fade-in px-2 sm:px-0">
         <div className="relative w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl">
-          <Search className="absolute left-4 xs:left-5 top-1/2 -translate-y-1/2 text-primary w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 transition-transform duration-300 group-focus-within:text-primary" />
+            <Search className="absolute left-4 xs:left-5 top-1/2 -translate-y-1/2 text-yellow-400 w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 transition-transform duration-300 group-focus-within:text-yellow-400" />
           <Input
             type="text"
             placeholder="Search articles by title, author, or description..."

@@ -24,6 +24,8 @@ interface ArticleCardProps {
 
 
 export const ArticleCard = ({ id, title, author, description, image, tags, url, isPublic, showSubmitButton, pending, onSubmitRequest }: ArticleCardProps) => {
+  // ...existing code...
+  // Remove submission request for admin users (logic handled in MyNook)
   const [submitting, setSubmitting] = useState(false);
   const [saved, setSaved] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
@@ -71,16 +73,16 @@ export const ArticleCard = ({ id, title, author, description, image, tags, url, 
 };
 
   return (
-    <div className="relative group bg-gradient-to-br from-[#23272f] via-[#18181b] to-[#101014] rounded-2xl overflow-hidden shadow-2xl border border-[#23272f] hover:border-primary hover:shadow-primary/30 transition-all duration-300 hover:scale-[1.03] flex flex-col h-full">
+  <div className="relative group bg-gradient-to-br from-[#23272f] via-[#18181b] to-[#101014] rounded-2xl overflow-hidden shadow-2xl border border-[#23272f] hover:border-yellow-400 hover:shadow-yellow-400/30 transition-all duration-300 hover:scale-[1.03] flex flex-col h-full">
       {/* Save button */}
       <button
-        className="absolute top-4 right-4 z-20 bg-black/60 rounded-full p-2 hover:bg-primary/80 transition-colors"
+        className="absolute top-4 right-4 z-20 bg-black/60 rounded-full p-2 hover:bg-yellow-400/80 transition-colors"
         onClick={handleSave}
         aria-label={saved ? "Unsave article" : "Save article"}
         style={{ zIndex: 30 }}
       >
         {saved ? (
-          <span title="Unsave article"><BookmarkCheck className="w-6 h-6 text-primary drop-shadow" /></span>
+          <span title="Unsave article"><BookmarkCheck className="w-6 h-6 text-yellow-400 drop-shadow" /></span>
         ) : (
           <span title="Save article"><Bookmark className="w-6 h-6 text-white drop-shadow" /></span>
         )}
@@ -105,10 +107,10 @@ export const ArticleCard = ({ id, title, author, description, image, tags, url, 
           )}
         </div>
   <div className="p-5 flex flex-col gap-2 flex-1">
-    <h3 className="text-xl font-bold text-white mb-1 line-clamp-2 group-hover:text-primary transition-colors duration-200">
+  <h3 className="text-xl font-bold text-white mb-1 line-clamp-2 group-hover:text-yellow-400 transition-colors duration-200">
       {title}
     </h3>
-    <p className="text-sm text-[#b3b3b3] mb-2 line-clamp-3 group-hover:text-foreground transition-colors duration-200">
+  <p className="text-sm text-[#b3b3b3] mb-2 line-clamp-3 group-hover:text-yellow-400 transition-colors duration-200">
       {description}
     </p>
     <div className="flex-1" />
@@ -126,10 +128,10 @@ export const ArticleCard = ({ id, title, author, description, image, tags, url, 
     </div>
   </div>
       </Link>
-      {/* Submission Request Button for private articles in My Nook */}
+      {/* Submission Request Button for private articles in My Nook (hidden for admin) */}
       {showSubmitButton && !isPublic && onSubmitRequest && (
         <Button
-          className="absolute top-4 left-4 z-20 animate-fade-in"
+          className="absolute top-4 left-4 z-20 animate-fade-in bg-yellow-400 text-black hover:bg-yellow-300"
           size="sm"
           disabled={submitting}
           onClick={async (e) => {

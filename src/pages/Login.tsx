@@ -7,7 +7,7 @@ const Login: React.FC = () => {
   <div className="w-full max-w-md p-6 sm:p-8 md:p-10 animate-fade-in md:bg-white/5 md:dark:bg-white/10 md:backdrop-blur-xl md:rounded-3xl md:shadow-2xl md:border md:border-white/10">
         <button
           onClick={() => window.location.href = '/'}
-          className="mb-4 text-sm text-foreground/70 hover:text-primary px-2 py-1 rounded transition-colors focus:outline-none focus:underline underline underline-offset-2"
+          className="mb-4 text-sm text-foreground/70 hover:text-yellow-400 px-2 py-1 rounded transition-colors focus:outline-none focus:underline underline underline-offset-2"
           style={{ background: 'none', border: 'none' }}
         >
           ← Back to Library
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
           Welcome Back
         </h1>
         <p className="text-lg text-foreground/80 text-center mb-8 animate-fade-in delay-100">
-          Sign in to continue to <span className="text-primary font-semibold">My Nook</span>
+          Sign in to continue to <span className="text-yellow-400 font-semibold">My Nook</span>
         </p>
         <AuthForm onAuthSuccess={() => {}} />
       </div>

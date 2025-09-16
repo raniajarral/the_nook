@@ -127,91 +127,93 @@ useEffect(() => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#18181b] via-[#23272f] to-[#101014] px-2 sm:px-0">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#18181b] via-[#23272f] to-[#101014] px-0">
       <Navigation />
       <main className="flex justify-center items-start pt-2 sm:pt-4 pb-6 sm:pb-10">
         <div className="w-full max-w-2xl mx-auto animate-fade-in">
-          {/* Hero Image with Save Button - sits above the card */}
-          <div className="relative w-full" style={{ aspectRatio: '2.2/1', marginBottom: '-1.5rem', zIndex: 2 }}>
+          {/* Modern Mobile Hero Image and Save Button (image connected to card) */}
+          <div className="w-full flex flex-col items-center relative">
             <img
               src={article.image && article.image.trim() !== "" ? article.image : defaultCover}
               alt={article.title}
-              className="w-full h-full object-cover brightness-90 rounded-t-2xl"
-              style={{ minHeight: '220px', maxHeight: '340px', objectPosition: 'center top', display: 'block' }}
+              className="w-full object-cover"
+              style={{ minHeight: '180px', maxHeight: '320px', objectPosition: 'center top', display: 'block', aspectRatio: '16/9', marginBottom: '0', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
             />
             <button
-              className={`absolute top-3 right-3 z-20 bg-black/60 rounded-full p-2 hover:bg-primary/80 transition-colors border border-border shadow-lg`}
+              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-20 bg-black/70 rounded-full p-3 hover:bg-yellow-400/20 transition-colors border border-border"
               onClick={handleSave}
               aria-label={saved ? "Unsave article" : "Save article"}
               style={{ zIndex: 30 }}
             >
               {saved ? (
-                <span title="Unsave article"><BookmarkCheck className="w-7 h-7 text-primary drop-shadow" /></span>
+                <span title="Unsave article"><BookmarkCheck className="w-7 h-7 text-yellow-400 drop-shadow" /></span>
               ) : (
                 <span title="Save article"><Bookmark className="w-7 h-7 text-white drop-shadow" /></span>
               )}
             </button>
           </div>
-          {/* Card Content */}
-    <div className="bg-white/5 dark:bg-white/10 rounded-b-2xl shadow-2xl border border-white/10 p-2 sm:p-6 flex flex-col gap-6" style={{ marginTop: 0, zIndex: 1, position: 'relative' }}>
-          {/* Title */}
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 leading-tight tracking-tight text-left">
-            {article.title}
-          </h1>
-          {/* Author, Date, Read Time */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 text-base text-left">
-            <span>by <span className="text-white font-normal">{article.author}</span></span>
-            <div className="flex gap-3 flex-wrap items-center text-white">
-              {article.publishedDate && <><span>•</span><span>{article.publishedDate}</span></>}
-              {article.readTime && <><span>•</span><span className="flex items-center"><span title="Read time"><BookOpen className="w-4 h-4 mr-1" /></span>{article.readTime}</span></>}
+          {/* Card Content - Modern Mobile Layout, flat on mobile, no yellow outline, image connected */}
+          <div className="bg-white/5 dark:bg-white/10 border border-white/10 p-4 sm:p-6 flex flex-col gap-6 -mt-1" style={{ zIndex: 1, position: 'relative', boxShadow: 'none', borderRadius: 0 }}>
+            {/* Title & Author - title white, author below */}
+            <div className="flex flex-col gap-1 mb-0 text-left">
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
+                {article.title}
+              </h1>
+              <div className="flex gap-3 flex-wrap items-center text-white mt-1">
+                {article.publishedDate && <><span>•</span><span>{article.publishedDate}</span></>}
+                {article.readTime && <><span>•</span><span className="flex items-center"><span title="Read time"><BookOpen className="w-4 h-4 mr-1" /></span>{article.readTime}</span></>}
+              </div>
+              <span className="text-base sm:text-lg font-semibold text-white/80 mt-0 mb-0">by {article.author}</span>
             </div>
-          </div>
-          <div className="border-t border-border my-2"></div>
-          {/* Description */}
-          <div className="prose prose-invert max-w-none mb-2 text-left">
-            <p className="text-base sm:text-lg text-white leading-relaxed">
-              {article.description}
-            </p>
-          </div>
-          <div className="border-t border-border my-2"></div>
-          {/* Tags - now below description */}
-          {article.tags && article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-2 text-left">
-              {article.tags.map((tag: string) => (
-                <span key={tag} className="text-xs text-white underline underline-offset-2 font-normal">#{tag}</span>
-              ))}
+            {/* Divider - slightly further up */}
+            <div className="w-full border-t border-yellow-400/40 mt-2 mb-0" />
+            {/* Description */}
+            <div className="prose prose-invert max-w-none mb-1 text-left">
+              <p className="text-base sm:text-lg text-white leading-relaxed">
+                {article.description}
+              </p>
             </div>
-          )}
-          <div className="border-t border-border my-2"></div>
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            {article.url && (
-              <Button asChild className="flex-1 sm:flex-none">
-                <a 
-                  href={article.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center"
-                >
-                  <span title="Read original article"><ExternalLink className="w-4 h-4 mr-2" /></span>
-                  Read Original Article
-                </a>
-              </Button>
+            {/* Divider - closer */}
+            <div className="w-full border-t border-yellow-400/40 my-1" />
+            {/* Tags - below description, modern pill style */}
+            {article.tags && article.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-1 text-left">
+                {article.tags.map((tag: string) => (
+                  <span key={tag} className="px-3 py-1 rounded-full bg-yellow-400/20 text-yellow-300 text-xs font-semibold shadow">#{tag}</span>
+                ))}
+              </div>
             )}
-            <button
-              onClick={() => window.history.back()}
-              className="inline-flex items-center text-sm text-white underline underline-offset-2 px-2 py-1 rounded transition-colors focus:outline-none mb-4"
-              type="button"
-              style={{ background: 'none', border: 'none' }}
-            >
-              <span title="Back"><ArrowLeft className="w-4 h-4 mr-2" /></span>
-              Back
-            </button>
+            {/* Divider - closer */}
+            <div className="w-full border-t border-yellow-400/40 my-1" />
+            {/* Actions - modern button layout */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 pt-2">
+              {article.url && (
+                <Button asChild className="flex-1 sm:flex-none">
+                  <a 
+                    href={article.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                  >
+                    <span title="Read original article"><ExternalLink className="w-4 h-4 mr-2" /></span>
+                    Read Original Article
+                  </a>
+                </Button>
+              )}
+              <Button
+                onClick={() => window.history.back()}
+                variant="secondary"
+                className="flex-1 sm:flex-none bg-[#23272f] text-white border-none shadow"
+                type="button"
+              >
+                <span title="Back"><ArrowLeft className="w-4 h-4 mr-2" /></span>
+                Back
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
   );
 };
 

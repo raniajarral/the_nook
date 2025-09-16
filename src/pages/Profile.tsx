@@ -138,7 +138,7 @@ const Profile: React.FC = () => {
       <div className="w-full max-w-2xl mx-auto">
         <div className="relative flex flex-col items-center justify-center mb-8">
           {/* Back Button */}
-          <Link to="/" className="absolute left-0 top-0 flex items-center gap-1 text-white/60 hover:text-primary transition-colors">
+          <Link to="/" className="absolute left-0 top-0 flex items-center gap-1 text-white/60 hover:text-yellow-400 transition-colors">
             <span title="Back"><ArrowLeft className="w-5 h-5" /></span>
             <span className="text-sm font-medium">Back</span>
           </Link>
@@ -146,7 +146,7 @@ const Profile: React.FC = () => {
           <Button
             variant={editing ? "outline" : "ghost"}
             size="icon"
-            className="absolute right-0 top-0 bg-white/90 hover:bg-white text-primary shadow-lg border border-gray-300"
+            className="absolute right-0 top-0 bg-white/90 hover:bg-white text-yellow-400 shadow-lg border border-gray-300"
             title={editing ? "Cancel" : "Edit Profile"}
             onClick={editing ? handleEditCancel : handleEditClick}
             style={{ transition: 'all 0.2s', boxShadow: '0 2px 8px rgba(0,0,0,0.10)' }}
@@ -156,7 +156,7 @@ const Profile: React.FC = () => {
         </div>
         <div className="flex flex-col items-center mb-8">
           <div className="relative flex flex-col items-center w-fit mx-auto">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-4xl font-bold text-primary-foreground mb-2 shadow-xl border-4 border-[#18181b] overflow-visible relative">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-yellow-400 to-yellow-300 flex items-center justify-center text-4xl font-bold text-yellow-900 mb-2 shadow-xl border-4 border-[#18181b] overflow-visible relative">
               {((editing ? editForm?.photoURL : userDetails.photoURL)) ? (
                 <img
                   src={editing ? editForm?.photoURL : userDetails.photoURL}
@@ -169,7 +169,7 @@ const Profile: React.FC = () => {
               {editing && (
                 <button
                   type="button"
-                  className="absolute -bottom-3 -right-3 z-30 bg-white/90 text-primary rounded-full p-2 shadow-lg border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                  className="absolute -bottom-3 -right-3 z-30 bg-white/90 text-yellow-400 rounded-full p-2 shadow-lg border border-gray-300 flex items-center justify-center hover:bg-gray-200 transition-colors"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploadingImage}
                   title="Upload profile picture"
@@ -223,7 +223,7 @@ const Profile: React.FC = () => {
           </div>
           {editing && (
             <div className="flex flex-col gap-2 mb-2 pt-4">
-              <Button onClick={handleEditSave} disabled={saving} className="w-full py-3 text-lg font-semibold rounded-xl shadow-md transition-all hover:scale-105 bg-primary text-white">
+              <Button onClick={handleEditSave} disabled={saving} className="w-full py-3 text-lg font-semibold rounded-xl shadow-md transition-all hover:scale-105 bg-yellow-400 text-black">
                 {saving ? "Saving..." : "Save"}
               </Button>
               {saveError && <span className="text-red-500 text-sm text-center">{saveError}</span>}
