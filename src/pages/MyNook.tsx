@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Bookmark, User2 } from "lucide-react";
-import { Navigation } from "@/components/ui/navigation";
+import { Bookmark, User2, BookOpen, Save, Plus } from "lucide-react";
+// Navigation markup will be handled directly in this file
 import { ArticleCard } from "@/components/ui/article-card";
 import { db } from "../lib/firebase";
 import { updateDoc, doc, collection, getDocs, getDoc, query, where, DocumentData, addDoc, serverTimestamp } from "firebase/firestore";
@@ -154,7 +154,32 @@ const reloadSavedArticles = async (currentUser: User) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#18181b] via-[#23272f] to-[#101014] relative">
-      <Navigation />
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex items-center justify-between w-full px-8 py-4 bg-[#23272f] border-b border-[#23272f]">
+        <div className="flex items-center gap-6">
+          <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-xl"><BookOpen className="w-5 h-5" />The Nook</a>
+          <a href="/mynook" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><BookOpen className="w-4 h-4" />My Nook</a>
+          <a href="/profile" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><User2 className="w-4 h-4" />Profile</a>
+        </div>
+        <div className="flex items-center gap-4">
+          <a href="/upload" className="flex items-center gap-1 bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition"><Plus className="w-4 h-4" />Add to Nook</a>
+          {userDetails?.status === "admin" && (
+            <a href="/admin" className="flex items-center gap-1 bg-[#18181b] text-yellow-400 font-bold px-4 py-2 rounded-lg border border-yellow-400 hover:bg-yellow-400 hover:text-black transition"><User2 className="w-4 h-4" />Admin</a>
+          )}
+        </div>
+      </nav>
+      {/* Mobile Navigation - Icons only */}
+      <nav className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#23272f] border-b border-[#23272f]">
+        <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-lg"><BookOpen className="w-5 h-5" /></a>
+        <div className="flex items-center gap-3">
+          <a href="/mynook" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><BookOpen className="w-6 h-6" /></a>
+          <a href="/profile" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><User2 className="w-6 h-6" /></a>
+          <a href="/upload" className="flex items-center bg-yellow-400 text-black font-bold px-2 py-1 rounded-md hover:bg-yellow-500 transition text-base"><Plus className="w-6 h-6" /></a>
+          {userDetails?.status === "admin" && (
+            <a href="/admin" className="flex items-center bg-[#18181b] text-yellow-400 font-bold px-2 py-1 rounded-md border border-yellow-400 hover:bg-yellow-400 hover:text-black transition text-base"><User2 className="w-6 h-6" /></a>
+          )}
+        </div>
+      </nav>
       <main className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
   {/* No title above tabs; tabs themselves will show icon and text with transition */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">

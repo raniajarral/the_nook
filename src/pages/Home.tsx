@@ -1,7 +1,7 @@
-import { Navigation } from "@/components/ui/navigation";
+// Navigation markup will be handled directly in this file
 import { ArticleCard } from "@/components/ui/article-card";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, BookOpen, Bookmark, User2, Upload, Shield, Plus } from "lucide-react";
 import defaultCover from "../assets/defaultcover.jpg";
 
 type ArticleCardProps = {
@@ -21,6 +21,26 @@ const Home = () => {
   const [articles, setArticles] = useState<ArticleCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [userStatus, setUserStatus] = useState<"user" | "admin">("user");
+
+  // Fetch user status (admin/user)
+  useEffect(() => {
+    const fetchUserStatus = async () => {
+      try {
+        const { auth } = await import("../lib/firebase");
+        const user = auth.currentUser;
+        if (!user) return;
+        const { doc, getDoc } = await import("firebase/firestore");
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          setUserStatus(userDoc.data().status === "admin" ? "admin" : "user");
+        }
+      } catch (err) {
+        setUserStatus("user");
+      }
+    };
+    fetchUserStatus();
+  }, []);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -67,7 +87,32 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-[#18181b] overflow-x-hidden">
-      <Navigation />
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex items-center justify-between w-full px-8 py-4 bg-[#23272f] border-b border-[#23272f]">
+        <div className="flex items-center gap-6">
+          <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-xl"><BookOpen className="w-5 h-5" />The Nook</a>
+          <a href="/mynook" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><Bookmark className="w-4 h-4" />My Nook</a>
+          <a href="/profile" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><User2 className="w-4 h-4" />Profile</a>
+        </div>
+        <div className="flex items-center gap-4">
+          <a href="/upload" className="flex items-center gap-1 bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition"><Plus className="w-4 h-4" />Add to Nook</a>
+          {userStatus === "admin" && (
+            <a href="/admin" className="flex items-center gap-1 bg-[#18181b] text-yellow-400 font-bold px-4 py-2 rounded-lg border border-yellow-400 hover:bg-yellow-400 hover:text-black transition"><Shield className="w-4 h-4" />Admin</a>
+          )}
+        </div>
+      </nav>
+      {/* Mobile Navigation - Icons only */}
+      <nav className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#23272f] border-b border-[#23272f]">
+        <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-lg"><BookOpen className="w-5 h-5" /></a>
+        <div className="flex items-center gap-3">
+          <a href="/mynook" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><BookOpen className="w-6 h-6" /></a>
+          <a href="/profile" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><User2 className="w-6 h-6" /></a>
+          <a href="/upload" className="flex items-center bg-yellow-400 text-black font-bold px-2 py-1 rounded-md hover:bg-yellow-500 transition text-base"><Plus className="w-6 h-6" /></a>
+          {userStatus === "admin" && (
+            <a href="/admin" className="flex items-center bg-[#18181b] text-yellow-400 font-bold px-2 py-1 rounded-md border border-yellow-400 hover:bg-yellow-400 hover:text-black transition text-base"><Shield className="w-6 h-6" /></a>
+          )}
+        </div>
+      </nav>
       {/* Hero Section - Responsive */}
       <section className="w-full flex flex-col items-center justify-center bg-[#18181b] border-b border-[#23272f] animate-fade-in px-2 sm:px-4 py-10 sm:py-16 md:py-20 min-h-[220px] sm:min-h-[280px] md:min-h-[340px]">
         <h1 className="text-3xl xs:text-4xl md:text-5xl font-extrabold text-white mb-3 sm:mb-4 animate-fade-in-slow text-center leading-tight break-words max-w-2xl">Welcome to The Nook</h1>

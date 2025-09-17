@@ -1,11 +1,12 @@
-import { Navigation } from "@/components/ui/navigation";
+// Navigation markup will be handled directly in this file
+import { BookOpen, Bookmark, User2, Save, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Link as LinkIcon, Save, X } from "lucide-react";
+import { ArrowLeft, Link as LinkIcon, X } from "lucide-react";
 import fallbackImg from "../assets/article-placeholder-1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 // import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
@@ -163,7 +164,32 @@ const Upload = () => {
 
   return (
     <div className="min-h-screen bg-[#18181b]">
-      <Navigation />
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex items-center justify-between w-full px-8 py-4 bg-[#23272f] border-b border-[#23272f]">
+        <div className="flex items-center gap-6">
+          <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-xl"><BookOpen className="w-5 h-5" />The Nook</a>
+          <a href="/mynook" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><BookOpen className="w-4 h-4" />My Nook</a>
+          <a href="/profile" className="flex items-center gap-1 text-white/80 hover:text-yellow-400 font-semibold transition"><User2 className="w-4 h-4" />Profile</a>
+        </div>
+        <div className="flex items-center gap-4">
+          <a href="/upload" className="flex items-center gap-1 bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-500 transition"><Plus className="w-4 h-4" />Add to Nook</a>
+          {userRole === "admin" && (
+            <a href="/admin" className="flex items-center gap-1 bg-[#18181b] text-yellow-400 font-bold px-4 py-2 rounded-lg border border-yellow-400 hover:bg-yellow-400 hover:text-black transition"><User2 className="w-4 h-4" />Admin</a>
+          )}
+        </div>
+      </nav>
+      {/* Mobile Navigation - Icons only */}
+      <nav className="flex md:hidden items-center justify-between w-full px-4 py-3 bg-[#23272f] border-b border-[#23272f]">
+        <a href="/" className="flex items-center gap-2 text-yellow-400 font-bold text-lg"><BookOpen className="w-5 h-5" /></a>
+        <div className="flex items-center gap-3">
+          <a href="/mynook" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><BookOpen className="w-6 h-6" /></a>
+          <a href="/profile" className="flex items-center text-white/80 hover:text-yellow-400 transition text-base"><User2 className="w-6 h-6" /></a>
+          <a href="/upload" className="flex items-center bg-yellow-400 text-black font-bold px-2 py-1 rounded-md hover:bg-yellow-500 transition text-base"><Plus className="w-6 h-6" /></a>
+          {userRole === "admin" && (
+            <a href="/admin" className="flex items-center bg-[#18181b] text-yellow-400 font-bold px-2 py-1 rounded-md border border-yellow-400 hover:bg-yellow-400 hover:text-black transition text-base"><User2 className="w-6 h-6" /></a>
+          )}
+        </div>
+      </nav>
       <main className="max-w-2xl mx-auto px-2 sm:px-4 lg:px-8 py-8">
   <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-8 text-center tracking-tight animate-fade-in">Add to your nook</h1>
         <form onSubmit={handleSubmit} className="space-y-6 bg-[#23272f] rounded-2xl shadow-2xl p-4 sm:p-8 border border-[#23272f] mt-6">
